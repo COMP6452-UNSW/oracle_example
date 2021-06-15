@@ -1,7 +1,6 @@
 import Web3 from 'web3';
 import { Account } from 'web3-core';
 import { Contract, DeployOptions } from 'web3-eth-contract';
-let fs = require('fs');
 
 class Helper {
     static gas_mulptiplier: number = 1.2;

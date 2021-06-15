@@ -4,7 +4,6 @@ import { deployContract } from './deploy';
 import { handleRequestEvent } from './listen';
 import { loadCompiledSols } from './load';
 import { grabTemperature } from './temperature_grabber';
-
 let fs = require('fs');
 
 function initializeProvider(): WebsocketProvider {

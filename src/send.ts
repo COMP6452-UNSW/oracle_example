@@ -1,6 +1,5 @@
 import Web3 from 'web3';
 import { Account } from 'web3-core';
-let fs = require('fs');
 
 class Helper {
     static gas_mulptiplier: number = 1.2;

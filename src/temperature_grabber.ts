@@ -1,5 +1,3 @@
-import Web3 from "web3";
-
 export async function grabTemperature(city: string): Promise<number> {
     const axios = require('axios').default;
     return axios.get(`https://goweather.herokuapp.com/weather/${city}`)

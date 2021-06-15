@@ -1,6 +1,5 @@
 let fs = require('fs');
 let solc = require('solc');
-var path = require('path');
 
 function findImports(importPath: string) {
     try {
