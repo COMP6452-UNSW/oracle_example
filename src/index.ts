@@ -42,12 +42,12 @@ if (shellArgs.length < 1) {
             let account = getAccount(web3, "trusted_server");
             let loaded = loadCompiledSols(["oracle"]);
             let contract = await deployContract(web3!, account, loaded.contracts["oracle"]["TemperatureOracle"].abi, loaded.contracts["oracle"]["TemperatureOracle"].evm.bytecode.object, [account.address]);
-            console.log(contract.options.address);
+            console.log("oracle contract address:" + contract.options.address);
         } else if (shellArgs[1] == "userapp") {
             let account = getAccount(web3, "user");
-            let loaded = loadCompiledSols(["oracle"]);
-            let contract = await deployContract(web3!, account, loaded.contracts["oracle"]["UserApp"].abi, loaded.contracts["oracle"]["UserApp"].evm.bytecode.object, [account.address]);
-            console.log(contract.options.address);
+            let loaded = loadCompiledSols(["oracle", "userapp"]);
+            let contract = await deployContract(web3!, account, loaded.contracts["userapp"]["UserApp"].abi, loaded.contracts["userapp"]["UserApp"].evm.bytecode.object, [account.address]);
+            console.log("user app contract address:" + contract.options.address);
         }
         web3Provider.disconnect(1000, 'Normal Closure');
     } else if (cmd0 == "listen") {

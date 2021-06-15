@@ -1,5 +1,18 @@
 let fs = require('fs');
 let solc = require('solc');
+var path = require('path');
+
+function findImports(importPath: string) {
+    try {
+        return {
+            contents: fs.readFileSync(`smart_contracts/${importPath}`, 'utf8')
+        };
+    } catch (e) {
+        return {
+            error: e.message
+        };
+    }
+}
 
 export function loadCompiledSols(solNames: string[]): any {
     interface SolCollection { [key: string]: any };
@@ -23,7 +36,7 @@ export function loadCompiledSols(solNames: string[]): any {
         }
     };
 
-    let compiler_output = solc.compile(JSON.stringify(input));
+    let compiler_output = solc.compile(JSON.stringify(input), { import: findImports });
 
     let output = JSON.parse(compiler_output);
 

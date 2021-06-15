@@ -104,20 +104,3 @@ contract TemperatureOracle is COMP6452Oracle, TemperatureOracleInterface {
         requestData(requestId, bytes(city));
     }
 }
-
-contract UserApp is TemeratureOracleClient {
-    uint256 public temperature;
-
-    constructor(address oracleAd) TemeratureOracleClient(oracleAd) {}
-
-    function getTemperature(string calldata city) public {
-        requestTemperatureFromOracle(city);
-    }
-
-    function receiveTemperatureFromOracle(
-        uint256 requestId,
-        uint256 _temperature
-    ) internal override {
-        temperature = _temperature;
-    }
-}
