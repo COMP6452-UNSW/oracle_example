@@ -3,6 +3,7 @@ import { WebsocketProvider, Account } from 'web3-core';
 import { deployContract } from './deploy';
 import { handleRequestEvent } from './listen';
 import { loadCompiledSols } from './load';
+import { grabTemperature } from './temperature_grabber';
 
 let fs = require('fs');
 
@@ -59,7 +60,12 @@ if (shellArgs.length < 1) {
             let loaded = loadCompiledSols(["oracle"]);
             let contractAddr = shellArgs[2];
             let contract = new web3.eth.Contract(loaded.contracts["oracle"]["TemperatureOracle"].abi, contractAddr, {});
-            handleRequestEvent(contract, web3, account);
+            handleRequestEvent(contract, web3, account, async (data: any) => {
+                let city = web3.utils.hexToAscii(data);
+                let temperature = await grabTemperature(city);
+                console.log("the temperature in " + city + " is " + temperature);
+                return web3.utils.padLeft(web3.utils.numberToHex(temperature), 64);
+            });
         }
     }
 })();
