@@ -91,9 +91,7 @@ if (shellArgs.length < 1) {
             }
             handleRequestEvent(contract, async (caller: String, requestId: Number, data: any) => {
                 let city = web3.utils.hexToAscii(data);
-                console.log(city);
                 let temperature = await grabTemperature(city);
-                console.log("the temperature in " + city + " is " + temperature);
                 let temperatureHex!: String;
                 try {
                     temperatureHex = web3.utils.toTwosComplement(temperature);
@@ -101,6 +99,7 @@ if (shellArgs.length < 1) {
                     console.log("invalid temperature grabbed");
                     return;
                 }
+                console.log("the temperature in " + city + " is " + temperature);
                 let receipt = await methodSend(web3, account, contract.options.jsonInterface, "replyData(uint256,address,bytes)", contract.options.address, [requestId, caller, temperatureHex]);
             });
         }
