@@ -63,7 +63,7 @@ if (shellArgs.length < 1) {
                 let city = web3.utils.hexToAscii(data);
                 let temperature = await grabTemperature(city);
                 console.log("the temperature in " + city + " is " + temperature);
-                return web3.utils.padLeft(web3.utils.numberToHex(temperature), 64);
+                return web3.utils.toTwosComplement(temperature);
             });
         }
     }

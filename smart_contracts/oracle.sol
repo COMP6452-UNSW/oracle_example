@@ -84,14 +84,14 @@ contract TemeratureOracleClient is COMP6452OracleClient {
         override
         oracleOnly
     {
-        uint256 temp = abi.decode(data, (uint256));
+        int256 temp = abi.decode(data, (int256));
         receiveTemperatureFromOracle(requestId, temp);
     }
 
-    function receiveTemperatureFromOracle(
-        uint256 requestId,
-        uint256 temperature
-    ) internal virtual {}
+    function receiveTemperatureFromOracle(uint256 requestId, int256 temperature)
+        internal
+        virtual
+    {}
 }
 
 contract TemperatureOracle is COMP6452Oracle, TemperatureOracleInterface {

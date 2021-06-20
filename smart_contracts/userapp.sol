@@ -5,7 +5,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./oracle.sol";
 
 contract UserApp is TemeratureOracleClient {
-    uint256 public temperature;
+    int256 public temperature;
 
     constructor(address oracleAd) TemeratureOracleClient(oracleAd) {}
 
@@ -15,7 +15,7 @@ contract UserApp is TemeratureOracleClient {
 
     function receiveTemperatureFromOracle(
         uint256 requestId,
-        uint256 _temperature
+        int256 _temperature
     ) internal override {
         temperature = _temperature;
     }
