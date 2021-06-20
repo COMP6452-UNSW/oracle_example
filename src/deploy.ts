@@ -39,9 +39,7 @@ export async function deployContract(web3: Web3, account: Account, abi: any, dat
         gas: Helper.gasPay(await a_contract.deploy({ data: a_contract.options.data, arguments: args } as DeployOptions).estimateGas({ from: account.address })),
     }).then((instance) => {
         a_instance = instance;
-    }).catch((ee) => {
-        console.error(ee);
-    });
+    }).catch(console.error);
 
     return a_instance!;
 }

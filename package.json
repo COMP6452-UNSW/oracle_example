@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "do": "npx tsc && node build/index.js deploy oracle",
+    "lo": "npx tsc && node build/index.js listen oracle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
