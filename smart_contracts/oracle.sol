@@ -6,7 +6,7 @@ interface COMP6452OracleInterface {
     function requestData(uint256 requestId, bytes memory data) external;
 }
 
-contract COMP6452OracleClient {
+abstract contract COMP6452OracleClient {
     address _oracleAddr;
 
     uint256 _requestCounter = 0;
@@ -33,8 +33,7 @@ contract COMP6452OracleClient {
 
     function receiveDataFromOracle(uint256 requestId, bytes memory data)
         public
-        virtual
-    {}
+        virtual;
 }
 
 abstract contract COMP6452Oracle is COMP6452OracleInterface {
@@ -59,7 +58,7 @@ abstract contract COMP6452Oracle is COMP6452OracleInterface {
         uint256 requestId,
         address caller,
         bytes memory data
-    ) public trusted {
+    ) public virtual trusted {
         COMP6452OracleClient(caller).receiveDataFromOracle(requestId, data);
     }
 }
@@ -68,7 +67,7 @@ interface TemperatureOracleInterface is COMP6452OracleInterface {
     function requestTemperature(uint256 requestId, string memory city) external;
 }
 
-contract TemeratureOracleClient is COMP6452OracleClient {
+abstract contract TemperatureOracleClient is COMP6452OracleClient {
     constructor(address oracleAd) COMP6452OracleClient(oracleAd) {}
 
     function requestTemperatureFromOracle(string memory city)
@@ -90,8 +89,7 @@ contract TemeratureOracleClient is COMP6452OracleClient {
 
     function receiveTemperatureFromOracle(uint256 requestId, int256 temperature)
         internal
-        virtual
-    {}
+        virtual;
 }
 
 contract TemperatureOracle is COMP6452Oracle, TemperatureOracleInterface {
@@ -103,4 +101,6 @@ contract TemperatureOracle is COMP6452Oracle, TemperatureOracleInterface {
     {
         requestData(requestId, bytes(city));
     }
+
+    //replydata know temperature oracle client then
 }
