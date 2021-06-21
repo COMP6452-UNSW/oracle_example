@@ -2,11 +2,11 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-interface COMP6452OracleInterface {
+interface OracleInterface {
     function requestData(uint256 requestId, bytes memory data) external;
 }
 
-abstract contract COMP6452OracleClient {
+abstract contract OracleClient {
     address _oracleAddr;
 
     uint256 _requestCounter = 0;
@@ -24,10 +24,7 @@ abstract contract COMP6452OracleClient {
         internal
         returns (uint256)
     {
-        COMP6452OracleInterface(_oracleAddr).requestData(
-            ++_requestCounter,
-            data
-        );
+        OracleInterface(_oracleAddr).requestData(++_requestCounter, data);
         return _requestCounter;
     }
 
@@ -36,7 +33,7 @@ abstract contract COMP6452OracleClient {
         virtual;
 }
 
-abstract contract COMP6452Oracle is COMP6452OracleInterface {
+abstract contract Oracle is OracleInterface {
     event request(uint256 requestId, address caller, bytes data);
 
     address public trustedServer;
@@ -59,16 +56,16 @@ abstract contract COMP6452Oracle is COMP6452OracleInterface {
         address caller,
         bytes memory data
     ) public virtual trusted {
-        COMP6452OracleClient(caller).receiveDataFromOracle(requestId, data);
+        OracleClient(caller).receiveDataFromOracle(requestId, data);
     }
 }
 
-interface TemperatureOracleInterface is COMP6452OracleInterface {
+interface TemperatureOracleInterface is OracleInterface {
     function requestTemperature(uint256 requestId, string memory city) external;
 }
 
-abstract contract TemperatureOracleClient is COMP6452OracleClient {
-    constructor(address oracleAd) COMP6452OracleClient(oracleAd) {}
+abstract contract TemperatureOracleClient is OracleClient {
+    constructor(address oracleAd) OracleClient(oracleAd) {}
 
     function requestTemperatureFromOracle(string memory city)
         internal
@@ -92,8 +89,8 @@ abstract contract TemperatureOracleClient is COMP6452OracleClient {
         virtual;
 }
 
-contract TemperatureOracle is COMP6452Oracle, TemperatureOracleInterface {
-    constructor(address serverAddr) COMP6452Oracle(serverAddr) {}
+contract TemperatureOracle is Oracle, TemperatureOracleInterface {
+    constructor(address serverAddr) Oracle(serverAddr) {}
 
     function requestTemperature(uint256 requestId, string memory city)
         public
