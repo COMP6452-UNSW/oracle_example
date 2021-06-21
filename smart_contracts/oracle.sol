@@ -60,10 +60,6 @@ abstract contract Oracle is OracleInterface {
     }
 }
 
-interface TemperatureOracleInterface is OracleInterface {
-    function requestTemperature(uint256 requestId, string memory city) external;
-}
-
 abstract contract TemperatureOracleClient is OracleClient {
     constructor(address oracleAd) OracleClient(oracleAd) {}
 
@@ -87,17 +83,4 @@ abstract contract TemperatureOracleClient is OracleClient {
     function receiveTemperatureFromOracle(uint256 requestId, int256 temperature)
         internal
         virtual;
-}
-
-contract TemperatureOracle is Oracle, TemperatureOracleInterface {
-    constructor(address serverAddr) Oracle(serverAddr) {}
-
-    function requestTemperature(uint256 requestId, string memory city)
-        public
-        override
-    {
-        requestData(requestId, bytes(city));
-    }
-
-    //replydata know temperature oracle client then
 }
