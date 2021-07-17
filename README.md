@@ -18,4 +18,4 @@ fill in providers and accounts
 
 ## writing oracle
 
-The oracle definition is in [smart_contracts/oracle.sol](smart_contracts/oracle.sol). To define a new oracle, create a concrete oracle class similar to TemperatureOracle, and a concrete oracle client class similar to TemperatureOracleClient class. Then change the user app code in [smart_contracts/userapp.sol](smart_contracts/userapp.sol) as well as the off-chain part in [src/index.ts](src/index.ts). The information from off-chain part can be acquired by some approach similar to [src/temperature_grabber.ts](src/temperature_grabber.ts).
+The oracle definition is in [smart_contracts/oracle.sol](smart_contracts/oracle.sol). To define a new oracle, create a __concrete oracle__ class similar to ```TemperatureOracle```, and a __concrete oracle client__ class similar to ```TemperatureOracleClient``` class. Then change the __user app__ code in [smart_contracts/userapp.sol](smart_contracts/userapp.sol) as well as the __off-chain part__ in [src/index.ts](src/index.ts). The __external information__ from off-chain part can be acquired by some approach similar to [src/temperature_grabber.ts](src/temperature_grabber.ts).
