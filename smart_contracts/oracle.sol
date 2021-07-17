@@ -60,6 +60,10 @@ abstract contract Oracle is OracleInterface {
     }
 }
 
+contract TemperatureOracle is Oracle {
+    constructor(address serverAddr) Oracle(serverAddr) {}
+}
+
 abstract contract TemperatureOracleClient is OracleClient {
     constructor(address oracleAd) OracleClient(oracleAd) {}
 
