@@ -8,6 +8,25 @@
 
 fill in providers and accounts
 
+e.g.
+
+```
+{
+    "provider_link": "ws://0.0.0.0:7545"
+}
+```
+
+```
+{
+    "trusted_server": {
+        "pri_key": PRIVATEKEY
+    },
+    "user": {
+        "pri_key": PRIVATEKEY
+    }
+}
+```
+
 ```npm install```
 
 ```npx tsc```
