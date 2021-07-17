@@ -60,7 +60,8 @@ if (shellArgs.length < 1) {
                 let contract = await deployContract(web3!, account, loaded.contracts["oracle"]["TemperatureOracle"].abi, loaded.contracts["oracle"]["TemperatureOracle"].evm.bytecode.object, [account.address]);
                 console.log("oracle contract address: " + contract.options.address);
             } catch (err) {
-                throw "error deploying contract";
+                console.error("error deploying contract");
+                console.error(err);
             }
         } else if (shellArgs[1] == "userapp") {
             try {
@@ -69,7 +70,8 @@ if (shellArgs.length < 1) {
                 let contract = await deployContract(web3!, account, loaded.contracts["userapp"]["UserApp"].abi, loaded.contracts["userapp"]["UserApp"].evm.bytecode.object, [account.address]);
                 console.log("user app contract address: " + contract.options.address);
             } catch (err) {
-                throw "error deploying contract";
+                console.error("error deploying contract");
+                console.error(err);
             }
         }
         web3Provider.disconnect(1000, 'Normal Closure');
@@ -87,7 +89,8 @@ if (shellArgs.length < 1) {
                 let contractAddr = shellArgs[2];
                 contract = new web3.eth.Contract(loaded.contracts["oracle"]["TemperatureOracle"].abi, contractAddr, {});
             } catch (err) {
-                throw "error deploying contract";
+                console.error("error listening oracle contract");
+                console.error(err);
             }
             handleRequestEvent(contract, async (caller: String, requestId: Number, data: any) => {
                 let city = web3.utils.hexToAscii(data);
@@ -96,7 +99,8 @@ if (shellArgs.length < 1) {
                 try {
                     temperatureHex = web3.utils.toTwosComplement(temperature);
                 } catch (e) {
-                    console.log("invalid temperature grabbed");
+                    console.error("invalid temperature grabbed");
+                    console.error(e);
                     return;
                 }
                 console.log("the temperature in " + city + " is " + temperature);
