@@ -19,10 +19,10 @@ e.g.
 ```
 {
     "trusted_server": {
-        "pri_key": PRIVATEKEY
+        "pri_key": ORACLE_ACCOUNT_PRIVATEKEY
     },
     "user": {
-        "pri_key": PRIVATEKEY
+        "pri_key": USER_APP_ADMIN_ACCOUNT_PRIVATEKEY
     }
 }
 ```
