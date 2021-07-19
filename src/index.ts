@@ -64,14 +64,19 @@ if (shellArgs.length < 1) {
                 console.error(err);
             }
         } else if (shellArgs[1] == "userapp") {
-            try {
-                let account = getAccount(web3, "user");
-                let loaded = loadCompiledSols(["oracle", "userapp"]);
-                let contract = await deployContract(web3!, account, loaded.contracts["userapp"]["UserApp"].abi, loaded.contracts["userapp"]["UserApp"].evm.bytecode.object, [account.address]);
-                console.log("user app contract address: " + contract.options.address);
-            } catch (err) {
-                console.error("error deploying contract");
-                console.error(err);
+            if (shellArgs.length <= 2) {
+                console.error("need to specify oracle address");
+            } else {
+                let oracleAddr = shellArgs[2];
+                try {
+                    let account = getAccount(web3, "user");
+                    let loaded = loadCompiledSols(["oracle", "userapp"]);
+                    let contract = await deployContract(web3!, account, loaded.contracts["userapp"]["UserApp"].abi, loaded.contracts["userapp"]["UserApp"].evm.bytecode.object, [oracleAddr]);
+                    console.log("user app contract address: " + contract.options.address);
+                } catch (err) {
+                    console.error("error deploying contract");
+                    console.error(err);
+                }
             }
         }
         web3Provider.disconnect(1000, 'Normal Closure');
