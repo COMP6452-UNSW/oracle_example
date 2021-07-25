@@ -67,11 +67,11 @@ contract TemperatureOracle is Oracle {
 abstract contract TemperatureOracleClient is OracleClient {
     constructor(address oracleAd) OracleClient(oracleAd) {}
 
-    function requestTemperatureFromOracle(string memory city)
-        internal
-        returns (uint256)
-    {
-        requestDataFromOracle(bytes(city));
+    function requestTemperatureFromOracle(
+        string memory city1,
+        string memory city2
+    ) internal returns (uint256) {
+        requestDataFromOracle(abi.encode(city1, city2));
         return _requestCounter;
     }
 
@@ -80,11 +80,13 @@ abstract contract TemperatureOracleClient is OracleClient {
         override
         oracleOnly
     {
-        int256 temp = abi.decode(data, (int256));
-        receiveTemperatureFromOracle(requestId, temp);
+        (int256 temp1, int256 temp2) = abi.decode(data, (int256, int256));
+        receiveTemperatureFromOracle(requestId, temp1, temp2);
     }
 
-    function receiveTemperatureFromOracle(uint256 requestId, int256 temperature)
-        internal
-        virtual;
+    function receiveTemperatureFromOracle(
+        uint256 requestId,
+        int256 temperature1,
+        int256 temperature2
+    ) internal virtual;
 }

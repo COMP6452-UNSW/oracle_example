@@ -98,18 +98,25 @@ if (shellArgs.length < 1) {
                 console.error(err);
             }
             handleRequestEvent(contract, async (caller: String, requestId: Number, data: any) => {
-                let city = web3.utils.hexToAscii(data);
-                let temperature = await grabTemperature(city);
-                let temperatureHex!: String;
+                let cities = web3.eth.abi.decodeParameters(['string', 'string'], data);
+                let city1 = cities[0];
+                let city2 = cities[1];
+                let temperature1 = await grabTemperature(city1);
+                let temperature2 = await grabTemperature(city2);
+                let temperatureHex1!: String;
+                let temperatureHex2!: String;
                 try {
-                    temperatureHex = web3.utils.toTwosComplement(temperature);
+                    temperatureHex1 = web3.utils.toTwosComplement(temperature1);
+                    temperatureHex2 = web3.utils.toTwosComplement(temperature2);
                 } catch (e) {
                     console.error("invalid temperature grabbed");
                     console.error(e);
                     return;
                 }
-                console.log("the temperature in " + city + " is " + temperature);
-                let receipt = await methodSend(web3, account, contract.options.jsonInterface, "replyData(uint256,address,bytes)", contract.options.address, [requestId, caller, temperatureHex]);
+                let temperaturesHex = web3.eth.abi.encodeParameters(['uint256', 'uint256'], [temperatureHex1, temperatureHex2]);
+                console.log("the temperature in " + city1 + " is " + temperature1);
+                console.log("the temperature in " + city2 + " is " + temperature2);
+                let receipt = await methodSend(web3, account, contract.options.jsonInterface, "replyData(uint256,address,bytes)", contract.options.address, [requestId, caller, temperaturesHex]);
             });
         }
     }
